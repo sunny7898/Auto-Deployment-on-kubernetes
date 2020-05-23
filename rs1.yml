@@ -18,4 +18,4 @@ spec:
     spec: 
       containers: 
       - name: pod1-con
-        image: httpd
+        image: sunny078/apache-webserver-php:v1
