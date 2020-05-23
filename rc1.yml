@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: myweb-rc
+   
+spec:
+  replicas: 3
+  selector: 
+    env: Prodution
+  template:
+    metadata: 
+      name: pod3
+      labels:
+        env: Prodution
+        region: India    
+    spec: 
+      containers: 
+      - name: pod1-con
+        image: httpd
+       
+     
