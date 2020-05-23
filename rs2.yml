@@ -8,8 +8,8 @@ spec:
   selector: 
     matchLabels:
       env: Production
-    matchExpressions:
-     -  { key: env, operator: In, values: [ Production ] }
+#    matchExpressions:
+#     -  { key: env, operator: In, values: [ Production ] }
 
   template:
     metadata: 
