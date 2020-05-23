@@ -7,9 +7,7 @@ spec:
   replicas: 3
   selector: 
     matchLabels:
-      env: Production
-#    matchExpressions:
-#     -  { key: env, operator: In, values: [ Production ] }
+      env: Production      
       
   template:
     metadata: 
