@@ -14,15 +14,17 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: web-service
-  labels:
-    env: Production
+    name: node-service
+    labels:
+        app: NodePort-service
 spec:
-  ports:
-    - port: 80
-  selector:
-    env: Production
-  type: LoadBalancer
+    selector:
+        env: Production
+    type: NodePort
+    ports:
+        -   nodePort: 30080
+            port: 80
+            targetPort: 80
 ---
 apiVersion: apps/v1
 kind: Deployment
