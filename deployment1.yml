@@ -1,21 +1,53 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: webpvc
+    labels:
+        name: webpvc
+spec:
+    accessModes:
+        -   ReadWriteOnce
+    resources:
+        requests:
+            storage: 1Gi 
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: web-service
+spec:
+    selector:
+        env: Production
+    type: NodePort
+    ports:
+        -   nodePort: 30080
+            port: 80
+            targetPort: 80
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myweb-deploy
-   
+  name: web-deploy
 spec:
-  replicas: 3
-  selector: 
-    matchLabels:
-      env: Production
+    replicas: 1
+    selector: 
+        matchLabels:
+            env: Production
       
-  template:
-    metadata: 
-      name: pod1
-      labels:
-        env: Production
-    spec: 
-      containers: 
-      - name: pod2-con
-        image: sunny078/apache-webserver-php:v1
-        
+    template:
+        metadata: 
+            name: web-pod1
+            labels:
+                env: Production
+        spec: 
+            containers: 
+            -   name: web-con
+                image: sunny078/jenkins-kube:v1
+                volumeMounts:
+                    -   name: website
+                        mountPath: /var/www/html
+            volumes:
+                -   name: website
+                    persistentVolumeClaim:
+                        claimName: webpvc
+               
