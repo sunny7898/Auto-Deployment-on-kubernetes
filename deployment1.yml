@@ -8,8 +8,6 @@ spec:
   selector: 
     matchLabels:
       env: Production
-#    matchExpressions:
-#     -  { key: env, operator: In, values: [ Production ] }
       
   template:
     metadata: 
@@ -19,4 +17,5 @@ spec:
     spec: 
       containers: 
       - name: pod2-con
-        image: httpd
+        image: sunny078/apache-webserver-php:v1
+        
