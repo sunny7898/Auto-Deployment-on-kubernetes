@@ -47,7 +47,7 @@ spec:
         tier: web
     spec:
       containers:
-      - image: sunny13/apache-webserver-php:v1
+      - image: sunny078/apache-webserver-php:v1
         name: httpd-web
         ports:
         - containerPort: 80
