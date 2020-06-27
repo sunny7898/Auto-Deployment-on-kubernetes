@@ -20,8 +20,8 @@ spec:
         env: Production
     type: NodePort
     ports:
-        -   nodePort: 30080
-            port: 8085
+        -   nodePort: 32123
+            port: 80
             targetPort: 80
 ---
 apiVersion: apps/v1
