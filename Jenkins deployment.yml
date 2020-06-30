@@ -1,0 +1,70 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: project-pvc
+    labels:
+        name: project-pvc
+spec:
+    accessModes:
+        -   ReadWriteOnce
+    resources:
+        requests:
+            storage: 1Gi 
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: jenkins-pvc
+    labels:
+        name: jenkins-pvc
+spec:
+    accessModes:
+        -   ReadWriteOnce
+    resources:
+        requests:
+            storage: 1Gi 
+---
+apiVersion: v1
+kind: Service
+metadata:
+    name: node-service
+spec:
+    selector:
+        env: master
+    type: NodePort
+    ports:
+        -   nodePort: 30000
+            port: 8080
+            targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkinsmasterdeploy
+spec:
+    replicas: 1
+    selector: 
+        matchLabels:
+            env: master
+      
+    template:
+        metadata: 
+            name: master-pod1
+            labels:
+                env: master
+        spec: 
+            containers: 
+            -   name: master-con
+                image: sunny078/jenkins-kube:v1
+                volumeMounts:
+                    -   name: project
+                        mountPath: /home/jenkins
+                    -   name: home
+                        mountPath: /var/lib/jenkins
+            volumes:
+                -   name: project
+                    persistentVolumeClaim:
+                        claimName: project-pvc
+                -   name: home
+                    persistentVolumeClaim:
+                        claimName: jenkins-pvc
